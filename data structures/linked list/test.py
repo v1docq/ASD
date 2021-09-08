@@ -29,7 +29,6 @@ def test_delete_function():
     len_after_2_delete = s_list.len()
     s_list = get_linked_list(tail_flag=True)
     s_list.delete(32, all=True)
-    s_list.print_all_nodes()
     len_after_3_tail_delete = s_list.len()
     assert len_after_1_delete == len_before - 1
     assert len_after_2_delete == len_before - 2
