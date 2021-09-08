@@ -1,29 +1,39 @@
-from LinkedList import Node, LinkedList
+from single_linked_list import Node, LinkedList
 from func import sum_function
 
 
-def get_linked_list():
+def get_linked_list(tail_flag: bool = False):
     node1 = Node(12)
     node2 = Node(99)
-    node3 = 37
-    node1.next = node2
-    node2.next = node3
+    node3 = Node(128)
+    node4 = Node(32)
     s_list = LinkedList()
     s_list.add_in_tail(node1)
     s_list.add_in_tail(node2)
-    s_list.add_in_tail(Node(128))
-    s_list.insert(afterNode=Node(128), newNode=37)
-    s_list.insert(afterNode=Node(37), newNode=99)
+    s_list.add_in_tail(node3)
+    s_list.add_in_tail(node4)
+    if tail_flag:
+        s_list.insert(afterNode=Node(128), newNode=99)
+        s_list.insert(afterNode=Node(32), newNode=32)
+        s_list.insert(afterNode=Node(32), newNode=32)
     return s_list
 
 
 def test_delete_function():
-    s_list = get_linked_list()
+    s_list = get_linked_list(tail_flag=True)
     len_before = s_list.len()
-    s_list.delete(128)
+    s_list.delete(99, all=False)
+    len_after_1_delete = s_list.len()
+    s_list = get_linked_list(tail_flag=True)
     s_list.delete(99, all=True)
-    len_after = s_list.len()
-    assert len_after < len_before
+    len_after_2_delete = s_list.len()
+    s_list = get_linked_list(tail_flag=True)
+    s_list.delete(32, all=True)
+    s_list.print_all_nodes()
+    len_after_3_tail_delete = s_list.len()
+    assert len_after_1_delete == len_before - 1
+    assert len_after_2_delete == len_before - 2
+    assert len_after_3_tail_delete == len_before - 3
 
 
 def test_find_function(val: int = 99,
@@ -62,4 +72,3 @@ def test_sum_func():
     s_list = get_linked_list()
     sum_list = sum_function(f_list, s_list)
     assert sum_list.len() == f_list.len()
-
